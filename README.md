@@ -8,7 +8,7 @@ You may also visit https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
 </p>
 
 # SCADA_Testbeds_Observation Overview
-This repo's primary purpose is to provide frameworks and accompanying data from various models and testbeds.
+This repo's primary purpose is to provide frameworks and accompanying data from various models and testbeds. This work was published [here](https://ieeexplore-ieee-org.elib.uah.edu/document/10115122).
 
 # Directory Breakdown
 Each directory is comprised of four main subdirectories: <br>
