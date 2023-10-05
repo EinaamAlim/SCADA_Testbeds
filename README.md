@@ -60,11 +60,12 @@ This follows the [OpenPLC Simulink-Interface](https://github.com/thiagoralves/Op
 6) After opening Matlab, launch Simulink and open the corresponding testbed model (\*.slx). To run the simulink models of the shared testbeds, the real-time slower module must be installed on Matlab. There are also a few toolbox dependencies that the user should be aware of. Each is detailed in the next couple sections.<br>
 
 ### The Real-Time Slower Installation
-To install the *Real Time Slower*, open Matlab and navigate to the Real Time Slower directory. Then type mex sfun_time.c<br>
+**Note: In versions of Matlab 2020a and newer, you can skip using the Real-Time Slower and simply use the built-in pacing mechanism under the Run options.** <br>
+To install the *Real-Time Slower*, open Matlab and navigate to the Real-Time Slower directory. Then type mex sfun_time.c<br>
 **Note: You may need to install the MinGW-w64 Compiler add-on.**
 
 ### The Matlab Compiler Runtime (MCR) Installation
-The *Matlab Compiler Runtime* is needed to run the simulink executables managed by the Matlab Manager script, navigate to the correct zip on the [installation page on the Mathworks site](https://www.mathworks.com/products/compiler/matlab-runtime.html) and install the setup within the zip folder. 
+The *Matlab Compiler Runtime* is needed to run the Simulink executables managed by the Matlab Manager script, navigate to the correct zip on the [installation page on the Mathworks site](https://www.mathworks.com/products/compiler/matlab-runtime.html) and install the setup within the zip folder. 
 **Note: You may need to set the environment variable of %PATH% to also include the directory of %MATLABROOT%\bin\win64, as described in [the documentation on generating and running executables outside Matlab](https://www.mathworks.com/help/releases/R2019a/dsp/ug/how-to-run-a-generated-executable-outside-matlab.html), just before the platform/command table.**  
 Example: "C:\Program Files\MATLAB\R2019b\bin\win64"
 
@@ -78,13 +79,13 @@ The following toolbox dependencies are also needed:<br>
 7) Once you've completed these steps, simply run the testbed model.
 
 ### The OpenPLC_Interface
-The simulink simulations will run as they are now. If you're running with different machines or different network settings than the typical localhost & PLC IP setup, please refer to the readme_openplc_interface for the OpenPLC_Interface block in the simulink models.
+The simulink simulations will run as they are now. If you're running with different machines or different network settings than the typical localhost & PLC IP setup, please refer to the readme_openplc_interface for the OpenPLC_Interface block in the Simulink models.
 
 ## Virtualization of the SCADA Model
-TODO: do this section
+Each SCADA model is within a virtualized environment. The model itself is a cyber-physical system (CPS) modeled in Matlab/Simulink. The physical system runs in one VM or Windows host, while OpenPLC is on another VM networked with the physical system's machine. The HMI is similarly placed on another machine on the same network. There exists a set of normal operations for each testbed. An adversarial agent is denoted as the Attacker in this scheme. 
 
 # Attack Scripts
-Each of the testbeds includes a Python 3 script that can be used to run a number of cyberattacks against the system. The Base.py file, present in the top-level directory, defines a BaseAttack class, which is extended by each of the testbed specific attack scripts, and a number of utility functions that are commonly used throughout all of the scripts. Our development and testing environment for these scripts was Kali Linux; some parts of the scripts may not perform as expected if run in another environment, especially a non-Linux environment. The attack scripts must be run as a super-user (either using sudo or from the root account). **It is important that each of the attack scripts be run from the [Testbed_Name]_Attacks directory (for example, the Gas_Pipeline_Attacks directory), rather than from any other directory. Additionally, the directory structure should not be modified; it is unlikely that the attack scripts will work as-is if the directory hierarchy is changed.** This is because the script makes assumptions about the the current working directory and the overall directory structure to resolve the location of certain other files. All of the attack scripts should be run with the following command line arguments:
+Each of the testbeds includes a Python 3 script that can be used to run a number of cyberattacks against the system. The Base.py file, present in the top-level directory, defines a BaseAttack class, which is extended by each of the testbed-specific attack scripts, and a number of utility functions that are commonly used throughout all of the scripts. Our development and testing environment for these scripts was Kali Linux; some parts of the scripts may not perform as expected if run in another environment, especially a non-Linux environment. The attack scripts must be run as a super-user (either using sudo or from the root account). **It is important that each of the attack scripts be run from the [Testbed_Name]_Attacks directory (for example, the Gas_Pipeline_Attacks directory), rather than from any other directory. Additionally, the directory structure should not be modified; it is unlikely that the attack scripts will work as-is if the directory hierarchy is changed.** This is because the script makes assumptions about the the current working directory and the overall directory structure to resolve the location of certain other files. All of the attack scripts should be run with the following command line arguments:
 <pre>
 python(3) Attack_Script_Name.py [Interface] [PLC IP] [PLC Port] [HMI IP] [HMI Port]
 </pre>
